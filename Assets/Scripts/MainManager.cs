@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -72,5 +70,15 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+        CheckHighScore();
+    }
+
+    public void CheckHighScore()
+    {
+        DataSaver saver = FindObjectOfType<DataSaver>();
+        if(saver.GetHighScore() < m_Points)
+        {
+            saver.UpdateHighScore(m_Points);
+        }
     }
 }
