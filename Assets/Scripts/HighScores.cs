@@ -76,13 +76,13 @@ public class HighScores : MonoBehaviour
         currentPlayerName = nameField.text;
     }
 
-    public string GetName()
+    public string GetName(int index)
     {
-        return scores[0].name;
+        return scores[index].name;
     }
 
-    public int GetHighScore()
+    public int GetHighScore(int index)
     {
-        return scores[0].score;
+        return scores[index].score;
     }
 }

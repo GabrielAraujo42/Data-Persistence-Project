@@ -4,7 +4,9 @@ using UnityEngine.UI;
 public class PersistentScoreText : MonoBehaviour
 {
     Text highScoreText;
-    DataSaver dataSaver;
+    HighScores highScores;
+
+    public int highScoreToShow = 0;
 
     void Awake()
     {
@@ -13,10 +15,10 @@ public class PersistentScoreText : MonoBehaviour
 
     void Start()
     {
-        dataSaver = FindObjectOfType<DataSaver>();
-        if (dataSaver == null) return;
+        highScores = FindObjectOfType<HighScores>();
+        if (highScores == null) return;
 
-        string name = dataSaver.GetName();
+        string name = highScores.GetName(highScoreToShow);
 
         if(name == "")
         {
@@ -24,8 +26,8 @@ public class PersistentScoreText : MonoBehaviour
         }
         else
         {
-            name = dataSaver.GetName();
-            int score = dataSaver.GetHighScore();
+            name = highScores.GetName(highScoreToShow);
+            int score = highScores.GetHighScore(highScoreToShow);
 
             highScoreText.text = "High Score : " + name + " : " + score;
         }

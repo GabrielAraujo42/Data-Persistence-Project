@@ -75,10 +75,7 @@ public class MainManager : MonoBehaviour
 
     public void CheckHighScore()
     {
-        DataSaver saver = FindObjectOfType<DataSaver>();
-        if(saver.GetHighScore() < m_Points)
-        {
-            saver.UpdateHighScore(m_Points);
-        }
+        HighScores scoreController = FindObjectOfType<HighScores>();
+        scoreController.UpdateHighScoreList(m_Points);
     }
 }
