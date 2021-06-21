@@ -3,12 +3,6 @@ using UnityEngine;
 
 public class DataSaver : MonoBehaviour
 {
-    public void SaveData<T>(T toSave)
-    {
-        string json = JsonUtility.ToJson(toSave);
-        File.WriteAllText(Application.persistentDataPath + "/saveFile.json", json);
-    }
-
     public void SaveScoreData(HighScoreData[] toSave)
     {
         string json = "";
@@ -17,17 +11,6 @@ public class DataSaver : MonoBehaviour
             json += JsonUtility.ToJson(data) + ";";
         }
         File.WriteAllText(Application.persistentDataPath + "/saveFile.json", json);
-    }
-
-    public string LoadData()
-    {
-        string path = Application.persistentDataPath + "/saveFile.json";
-        if (File.Exists(path))
-        {
-            string json = File.ReadAllText(path);
-            return json;
-        }
-        return "";
     }
 
     public string[] LoadScoreData()
@@ -39,5 +22,14 @@ public class DataSaver : MonoBehaviour
             return json.Split(';');
         }
         return null;
+    }
+
+    public void ResetScores()
+    {
+        string path = Application.persistentDataPath + "/saveFile.json";
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
     }
 }

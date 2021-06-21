@@ -18,14 +18,17 @@ public class SceneLoader : MonoBehaviour
         {
             SceneManager.LoadScene(gameScene);
         }
-        else
-        {
-            Debug.Log("Problem");
-        }
     }
 
     public void LoadScores()
     {
         SceneManager.LoadScene(scoresScene);
+    }
+
+    public void ClearScores()
+    {
+        FindObjectOfType<DataSaver>().ResetScores();
+        FindObjectOfType<HighScores>().LoadData();
+        LoadMenu();
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class HighScores : MonoBehaviour
 {
     DataSaver dataSaver;
-    InputField nameField;
     [SerializeField] List<HighScoreData> scores = new List<HighScoreData>();
 
     string currentPlayerName = null;
@@ -23,13 +22,17 @@ public class HighScores : MonoBehaviour
         }
         InitializeHighScore();
 
-        nameField = FindObjectOfType<InputField>();
         dataSaver = GetComponent<DataSaver>();
 
+        LoadData();
+    }
+
+    public void LoadData()
+    {
         string[] json = dataSaver.LoadScoreData();
-        if(json != null)
+        scores = new List<HighScoreData>();
+        if (json != null)
         {
-            scores = new List<HighScoreData>();
             foreach (string score in json)
             {
                 scores.Add(JsonUtility.FromJson<HighScoreData>(score));
@@ -47,10 +50,11 @@ public class HighScores : MonoBehaviour
 
     public bool StartGame()
     {
-        if (nameField == null) return false;
-        if (nameField.text == null) return false;
+        InputField inputField = FindObjectOfType<InputField>();
+        if (inputField == null) return false;
+        if (inputField.text == null) return false;
 
-        SetCurrentPlayer();
+        SetCurrentPlayer(inputField);
         return true;
     }
 
@@ -75,9 +79,9 @@ public class HighScores : MonoBehaviour
         scores.Add(new HighScoreData());
     }
 
-    void SetCurrentPlayer()
+    void SetCurrentPlayer(InputField inputField)
     {
-        currentPlayerName = nameField.text;
+        currentPlayerName = inputField.text;
     }
 
     public string GetName(int index)
