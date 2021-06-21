@@ -22,7 +22,7 @@ public class PersistentScoreText : MonoBehaviour
 
         if(name == "")
         {
-            highScoreText.text = "High Score : 0";
+            highScoreText.text = "High Score : ---";
         }
         else
         {

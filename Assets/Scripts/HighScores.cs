@@ -6,7 +6,7 @@ public class HighScores : MonoBehaviour
 {
     DataSaver dataSaver;
     InputField nameField;
-    List<HighScoreData> scores = new List<HighScoreData>();
+    [SerializeField] List<HighScoreData> scores = new List<HighScoreData>();
 
     string currentPlayerName = null;
     int listMaxLength = 5;
@@ -26,10 +26,14 @@ public class HighScores : MonoBehaviour
         nameField = FindObjectOfType<InputField>();
         dataSaver = GetComponent<DataSaver>();
 
-        string json = dataSaver.LoadData();
-        if(json != "")
+        string[] json = dataSaver.LoadScoreData();
+        if(json != null)
         {
-            scores = JsonUtility.FromJson<List<HighScoreData>>(json);
+            scores = new List<HighScoreData>();
+            foreach (string score in json)
+            {
+                scores.Add(JsonUtility.FromJson<HighScoreData>(score));
+            }
         }
     }
 
@@ -38,7 +42,7 @@ public class HighScores : MonoBehaviour
         HighScoreData newScore = new HighScoreData(currentPlayerName, score);
         AddHighScore(newScore);
 
-        dataSaver.SaveData<List<HighScoreData>>(scores);
+        dataSaver.SaveScoreData(scores.ToArray());
     }
 
     public bool StartGame()
@@ -62,7 +66,7 @@ public class HighScores : MonoBehaviour
 
     int CompareScores(HighScoreData scoreX, HighScoreData scoreY)
     {
-        return scoreX.score.CompareTo(scoreY.score);
+        return scoreY.score.CompareTo(scoreX.score);
     }
 
     void InitializeHighScore()
@@ -78,6 +82,10 @@ public class HighScores : MonoBehaviour
 
     public string GetName(int index)
     {
+        if(index >= scores.Count)
+        {
+            return "";
+        }
         return scores[index].name;
     }
 

@@ -1,5 +1,5 @@
 [System.Serializable]
-class HighScoreData
+public class HighScoreData
 {
     public string name;
     public int score;
