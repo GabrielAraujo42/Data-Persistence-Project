@@ -1,18 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] int menuScene = 0;
+    [SerializeField] int gameScene = 1;
+    [SerializeField] int scoresScene = 2;
+
+    public void LoadMenu()
     {
-        
+        SceneManager.LoadScene(menuScene);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void LoadGame()
     {
-        
+        if (FindObjectOfType<HighScores>().StartGame())
+        {
+            SceneManager.LoadScene(gameScene);
+        }
+    }
+
+    public void LoadScores()
+    {
+        SceneManager.LoadScene(scoresScene);
     }
 }

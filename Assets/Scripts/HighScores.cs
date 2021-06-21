@@ -41,13 +41,13 @@ public class HighScores : MonoBehaviour
         dataSaver.SaveData<List<HighScoreData>>(scores);
     }
 
-    public void StartGame()
+    public bool StartGame()
     {
-        if (nameField == null) return;
-        if (nameField.text == null) return;
+        if (nameField == null) return false;
+        if (nameField.text == null) return false;
 
         SetCurrentPlayer();
-        dataSaver.LoadNextScene();
+        return true;
     }
 
     void AddHighScore(HighScoreData newScore)
